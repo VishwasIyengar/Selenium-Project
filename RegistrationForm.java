@@ -1,11 +1,12 @@
 package Package_Vishwas;
+
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 	public class RegistrationForm
 	{
@@ -20,13 +21,13 @@ import org.testng.annotations.Test;
 	    @Test
 	    public void testRegistrationForm() 
 	    {
-	        WebElement firstNameInput = driver.findElement(By.id("firstName"));
-	        firstNameInput.sendKeys("John");
+	        WebElement firstNameInput = driver.findElement(By.id("first-name"));
+	        firstNameInput.sendKeys("Vishwas");
 
-	        WebElement lastNameInput = driver.findElement(By.id("lastName"));
-	        lastNameInput.sendKeys("Doe");
+	        WebElement lastNameInput = driver.findElement(By.id("last-name"));
+	        lastNameInput.sendKeys("Iyengar");
 
-	        WebElement phoneNumberInput = driver.findElement(By.id("phoneNumber"));
+	        WebElement phoneNumberInput = driver.findElement(By.id("mobile"));
 	        phoneNumberInput.sendKeys("9611075397");
 	        
 	        WebElement emailInput = driver.findElement(By.id("email"));
@@ -38,7 +39,7 @@ import org.testng.annotations.Test;
 	        WebElement cityInput = driver.findElement(By.id("city"));
 	        cityInput.sendKeys("Bengaluru");
 
-	        WebElement sendButton = driver.findElement(By.id("send"));
+	        WebElement sendButton = driver.findElement(By.className("btn btn-block btn-primary"));
 	        sendButton.click();
 	    }	    
 
@@ -48,4 +49,3 @@ import org.testng.annotations.Test;
 	        driver.quit();
 	    }
 	}
-

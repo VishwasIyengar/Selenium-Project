@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeMethod;
 
-public class Buttons 
+public class Button
 {
 	WebDriver driver;
     @BeforeMethod
