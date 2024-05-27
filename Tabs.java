@@ -8,7 +8,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Tabs {
+public class Tabs 
+{
     WebDriver driver;
 
     @BeforeClass
@@ -21,9 +22,10 @@ public class Tabs {
     }
     
     @Test
-    public void testTabs() {
+    public void testTabs() throws InterruptedException 
+    {
         // Open www.demoqa.com
-        driver.get("https://www.demoqa.com/tabs");
+        driver.get("https://demoqa.com/tabs");
 
         // Find tab elements and click on them
         WebElement tab1 = driver.findElement(By.id("demo-tab-what"));
@@ -38,10 +40,13 @@ public class Tabs {
 
         tab3.click();
         assert tab3.getAttribute("aria-selected").equals("true") : "Tab 3 is not selected";
+        
+        Thread.sleep(5000);
     }
 
     @AfterClass
-    public void tearDown() {
+    public void tearDown() 
+    {
         // Close the browser
         driver.quit();
     }

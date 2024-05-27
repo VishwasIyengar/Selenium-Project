@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 
 public class TextBox
@@ -16,11 +17,12 @@ public class TextBox
   {
 	  System.setProperty("webdriver.chrome.driver", "C:\\Users\\HP\\OneDrive\\Desktop\\Selenium3\\chromedriver-win64\\chromedriver.exe");
       driver = new ChromeDriver();
-      driver.get("https://demoqa.com/text-box"); 	    	        	    
+      driver.get("https://demoqa.com/text-box");
+      driver.manage().window().maximize();
   }
   
   @Test
-  public void f() 
+  public void testTextBox() throws InterruptedException 
   {
 	  WebElement FullNameField = driver.findElement(By.id("userName"));
       FullNameField.sendKeys("Vishwas Iyengar");
@@ -30,8 +32,17 @@ public class TextBox
       CurrentAddressField.sendKeys("abc");
       WebElement PermanentAddressField = driver.findElement(By.id("permanentAddress"));
       PermanentAddressField.sendKeys("abc");
-      WebElement submitButton = driver.findElement(By.id("submit"));
+      WebElement submitButton = driver.findElement(By.xpath("//button[@id='submit']"));
       submitButton.click(); 
+      
+      
+      
+	String enteredText = FullNameField.getAttribute("value");
+
+      // Assert that the entered text matches the expected text
+	String expectedText = "Vishwas Iyengar";
+	Assert.assertEquals(enteredText, expectedText, "Text entered into full name field is not as expected");
+	Thread.sleep(5000);
   }
 
   @AfterMethod

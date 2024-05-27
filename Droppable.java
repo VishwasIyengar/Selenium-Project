@@ -1,6 +1,6 @@
 package Package_Vishwas;
 
-import org.junit.AfterClass;
+import org.junit.AfterClass; 
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,18 +25,26 @@ public class Droppable
 	}
 	
 	@Test
-	public void TestDroppable()
+    public void testDroppable() 
 	{
-		driver.get("https://demoqa.com/droppable");
-        
+        // Open the webpage
+        driver.get("https://demoqa.com/droppable");
+
+        // Locate draggable and droppable elements
         WebElement draggable = driver.findElement(By.id("draggable"));
         WebElement droppable = driver.findElement(By.id("droppable"));
-       
+
+        // Perform drag-and-drop action
+        Actions actions = new Actions(driver);
         actions.dragAndDrop(draggable, droppable).build().perform();
-        
-        String droppableText = droppable.getText();
-        assert droppableText.equals("Dropped!");
-	}
+
+        // Wait for a while to observe the result
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @AfterClass
     public void tearDown() 

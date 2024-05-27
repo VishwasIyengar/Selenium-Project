@@ -1,6 +1,6 @@
 package Package_Vishwas;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.Test; 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,9 +17,10 @@ import org.testng.annotations.BeforeMethod;
 	        System.setProperty("webdriver.chrome.driver", "C:\\Users\\HP\\OneDrive\\Desktop\\Selenium3\\chromedriver-win64\\chromedriver.exe");
 	        driver = new ChromeDriver();
 	        driver.get("https://www.toolsqa.com/selenium-training/#enroll-form");
+	        driver.manage().window().maximize();
 	    }
 	    @Test
-	    public void testRegistrationForm() 
+	    public void testRegistrationForm() throws InterruptedException 
 	    {
 	        WebElement firstNameInput = driver.findElement(By.id("first-name"));
 	        firstNameInput.sendKeys("Vishwas");
@@ -38,9 +39,14 @@ import org.testng.annotations.BeforeMethod;
 	        
 	        WebElement cityInput = driver.findElement(By.id("city"));
 	        cityInput.sendKeys("Bengaluru");
-
-	        WebElement sendButton = driver.findElement(By.className("btn btn-block btn-primary"));
+	        
+	        WebElement capitchaInput = driver.findElement(By.id("code"));
+	        capitchaInput.sendKeys("sQvX");
+	        
+	        WebElement sendButton = driver.findElement(By.xpath("//*[@id=\"enroll-form\"]/button"));
 	        sendButton.click();
+	        
+	        Thread.sleep(3000);
 	    }	    
 
 	    @AfterMethod

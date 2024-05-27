@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
+
 public class Resizable 
 {
   WebDriver driver;
@@ -25,7 +26,8 @@ public class Resizable
     	actions = new Actions(driver);
 	}
 	@Test
-    public void testResizable() {
+    public void testResizable() 
+	{
         // Open www.demoqa.com
         driver.get("https://demoqa.com/resizable");
 
@@ -37,7 +39,8 @@ public class Resizable
     }
 
     // Method to resize the element
-    private void resizeElement(WebElement element, int xOffset, int yOffset) {
+    private void resizeElement(WebElement element, int xOffset, int yOffset) 
+    {
         actions.clickAndHold(element).moveByOffset(xOffset, yOffset).release().build().perform();
     }
 

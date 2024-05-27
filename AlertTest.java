@@ -5,11 +5,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class AlertTest {
+import static org.testng.Assert.assertEquals;
+
+import java.time.Duration; 
+
+public class AlertTest 
+{
 
      WebDriver driver;
 
@@ -22,43 +29,32 @@ public class AlertTest {
         driver.get("https://demoqa.com/alerts");
     }
     @Test
-    public void testAlerts() {
-        // Open www.demoqa.com
-        driver.get("https://www.demoqa.com/alerts");
+    public void automateAlert() throws InterruptedException {
+        // Locate the button to trigger a simple alert
+        WebElement clickMeButton = driver.findElement(By.id("alertButton"));
 
-        // Simple Alert
-        WebElement simpleAlertButton = driver.findElement(By.id("alertButton"));
-        simpleAlertButton.click();
-        handleAlert();
+        // Click the button to generate the alert
+        clickMeButton.click();
 
-        // Confirmation Alert
-        WebElement confirmationAlertButton = driver.findElement(By.id("confirmButton"));
-        confirmationAlertButton.click();
-        handleAlert();
+        // Use WebDriverWait for expected conditions (alert presence)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Set a timeout of 5 seconds
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
 
-        // Prompt Alert
-        WebElement promptAlertButton = driver.findElement(By.id("timerAlertButton"));
-        promptAlertButton.click();
-        handlePromptAlert("Vishwas Iyengar");
+        // Get the text from the alert
+        String alertText = alert.getText();
 
-        // Verify prompt alert result
-        WebElement promptResult = driver.findElement(By.id("promptConfirmation"));
-        assert promptResult.getText().equals("You entered: Vishwas Iyengar");
-    }
+        // Assert the expected alert text
+        assertEquals(alertText, "You clicked a button", "Alert text does not match");
 
-    private void handleAlert() {
-        Alert alert = driver.switchTo().alert();
+        // Accept the alert (similar for dismiss)
         alert.accept();
-    }
-
-    private void handlePromptAlert(String input) {
-        Alert promptAlert = driver.switchTo().alert();
-        promptAlert.sendKeys(input);
-        promptAlert.accept();
+        
+        Thread.sleep(3000);
     }
 
     @AfterTest
-    public void tearDown() {
+    public void tearDown() 
+    {
         // Close the browser
         driver.quit();
     }

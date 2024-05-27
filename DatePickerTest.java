@@ -1,17 +1,18 @@
 package Package_Vishwas;
 
-import org.testng.annotations.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver;  
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 public class DatePickerTest 
 {
-    WebDriver driver;
-
+	WebDriver driver;
+  
     @BeforeClass
     public void setUp() 
     {
@@ -19,27 +20,35 @@ public class DatePickerTest
     	System.setProperty("webdriver.chrome.driver", "C:\\Users\\HP\\OneDrive\\Desktop\\Selenium3\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        
     }
 
     @Test
-    public void pickDate()
+    public void testDatePicker() throws InterruptedException 
     {
-        // Open www.demoqa.com
         driver.get("https://demoqa.com/date-picker");
 
-        // Find date picker input field and click on it to open the calendar
-        WebElement datePickerInput = driver.findElement(By.id("datePickerMonthYearInput"));
-        datePickerInput.click();
-
-        // Select desired date (e.g., April 26, 2024)
-        WebElement desiredDateandTime = driver.findElement(By.xpath("//*[@id=\"dateAndTimePickerInput\"]"));
-        desiredDateandTime.click();
+        WebElement datePickerInput = driver.findElement(By.id("datePickerMonthYearInput"));datePickerInput.click(); 
+         
+        
+        WebElement dateAndTimeInput = driver.findElement(By.xpath("//*[@id=\"dateAndTimePickerInput\"]"));
+        try 
+        {
+        	dateAndTimeInput.click();
+        } 
+        catch (Exception e) 
+        {           
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            jsExecutor.executeScript("arguments[0].click();", dateAndTimeInput);
+        }
+		  
+		 
+        Thread.sleep(5000);
     }
 
     @AfterClass
     public void tearDown() 
     {
-        // Close the browser
         driver.quit();
     }
 }

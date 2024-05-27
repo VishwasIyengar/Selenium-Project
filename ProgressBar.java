@@ -1,9 +1,13 @@
 package Package_Vishwas;
 
+import java.time.Duration; 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -21,38 +25,41 @@ public class ProgressBar {
     }
 
     @Test
-    public void testProgressBar() {
+    public void testProgressBar() 
+    {
+    	try
+    	{
         // Open www.demoqa.com
         driver.get("https://demoqa.com/progress-bar");
 
         // Find the Progress Bar element
-        WebElement progressBar = driver.findElement(By.id("progressBar"));
-
-        // Get the initial width of the Progress Bar
-        String initialWidth = progressBar.getCssValue("width");
-
-        // Trigger an action that causes the Progress Bar to progress
-        // For example, clicking a button
+     // Find and click the "Start" button to initiate progress
         WebElement startButton = driver.findElement(By.id("startStopButton"));
         startButton.click();
 
-        // Wait for the Progress Bar to progress
-        // For simplicity, you can use Thread.sleep(), but using explicit waits is recommended
-        try {
-            Thread.sleep(5000); // Wait for 5 seconds (adjust as needed)
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for progress bar to disappear
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("progressBar")));
 
-        // Get the final width of the Progress Bar
-        String finalWidth = progressBar.getCssValue("width");
+        // Verify completion message
+        WebElement completionMessage = driver.findElement(By.id("progressBarResult"));
+        String actualMessage = completionMessage.getText();
+        String expectedMessage = "Progress Bar";
 
-        // Verify that the Progress Bar has progressed
-        assert !initialWidth.equals(finalWidth) : "Progress Bar did not progress";
+        // Assert completion message
+        assert actualMessage.equals(expectedMessage) : "Completion message doesn't match";
+
+        // Close the browser
+        driver.quit();
+    } catch (org.openqa.selenium.WebDriverException e) {
+        System.err.println("WebDriverException occurred: " + e.getMessage());
+        // Handle the exception here, e.g., restart the browser or terminate the test
+    }
     }
 
     @AfterClass
-    public void tearDown() {
+    public void tearDown() 
+    {
         // Close the browser
         driver.quit();
     }
